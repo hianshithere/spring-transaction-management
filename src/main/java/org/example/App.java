@@ -8,19 +8,21 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class App {
     public static void main(String[] args) {
+
         ConfigurableApplicationContext context
-                = new AnnotationConfigApplicationContext (
+                = new AnnotationConfigApplicationContext(
                 ProductConfig.class
         );
 
-        context.registerShutdownHook ();
+        context.registerShutdownHook();
 
-        ProductService productService = context.getBean (
+        ProductService productService = context.getBean(
                 "productService",
                 ProductService.class);
 
-        productService.save (new Product ());
-        context.close ();
+        productService.deleteAll();
+        productService.save(new Product());
+        context.close();
     }
 }
 
