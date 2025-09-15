@@ -1,5 +1,5 @@
 package org.aprerequisites.proxy;
 
-public interface DailySession {
+interface DailySession {
     void attendSession();
 }
