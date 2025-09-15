@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class ProductRepository {
 
-  @Autowired private JdbcTemplate jdbcTemplate;
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
   @Transactional
   public void saveProduct(Product product) {

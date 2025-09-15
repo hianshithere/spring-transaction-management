@@ -5,6 +5,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Aspect
 @Component
@@ -44,4 +45,23 @@ public class LayerLoggingAspect {
         logger.logEnd(layer, methodName, returnValue);
         return returnValue;
     }
+
+  @Around("@annotation(transactional)")
+  public Object logTransactionalMethod(ProceedingJoinPoint joinPoint, Transactional transactional)
+      throws Throwable {
+
+    String methodName = joinPoint.getSignature().toShortString();
+    Object[] args = joinPoint.getArgs();
+    boolean isNewTransaction = statusProvider.isNewTransaction();
+
+    logger.logStart(
+        "Starts Transactional",
+        methodName + " Args: " + java.util.Arrays.toString(args),
+        isNewTransaction);
+
+    Object result = joinPoint.proceed();
+
+    logger.logEnd("Ends Transactional", methodName, result);
+    return result;
+  }
 }
