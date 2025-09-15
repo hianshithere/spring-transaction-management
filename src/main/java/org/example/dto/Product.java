@@ -1,26 +1,29 @@
 package org.example.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     private int id;
     private String name;
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
+
+    public Product copy() {
+        return Product.builder()
+                .id(this.id)
+                .name(this.name)
+                .build();
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public Product updateName(String newName) {
+        return Product.builder()
+                .id(this.id)
+                .name(newName)
+                .build();
     }
 }
